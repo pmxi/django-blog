@@ -1,0 +1,25 @@
+{% extends 'blog/base.html' %}
+
+{% block head %}
+    {{ block.super }}
+    <script type="text/javascript" id="MathJax-script" async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+{% endblock head %}
+
+
+{% block title %}
+    article.title
+{% endblock %}
+
+{% block body %}
+    <article class="blog_post">
+        <h1> {{ article.title }}</h1>
+        <h3 class="article_details">published: {{ article.pub_date }}</h3>
+        <h3 class="article_details">by: {{ article.author }}</h3>
+
+        <p>
+            {{ article.render_content_markdown|safe }}
+        </p>
+    </article>
+{% endblock %}

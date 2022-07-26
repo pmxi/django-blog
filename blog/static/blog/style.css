@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital@0;1&family=Source+Serif+Pro&display=swap');
+/*:root {*/
+/*    --body-font: 'Source Serif Pro', serif;*/
+/*    --title-font: 'Playfair Display', serif;*/
+/*}*/
+
+body {
+    max-width: 700px;
+    margin: 1em auto;
+    font-size: 1.3em;
+    font-family: 'Source Serif Pro', serif;
+    background: white;
+
+}
+
+p {
+    line-height: 150%;
+}
+
+
+.article_details {
+    color: #656363;
+    font-size: 1em;
+    font-style: italic;
+    text-align: left;
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+
+}
+
+h1 {
+    font-size: 2em;
+    text-align: center;
+
+}
+
+h2 {
+    font-size: 1.5em;
+}
+
+h3 {
+    font-size: 1.17em;
+}
+
+h4 {
+    font-size: 1em;
+}
+
+h5 {
+    font-size: 0.83em;
+}
+
+h6 {
+    font-size: 0.67em;
+}
