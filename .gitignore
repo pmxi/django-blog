@@ -6,3 +6,4 @@ mysite.iml
 __pycache__
 dbarchive
 su.txt
+secrets.py
