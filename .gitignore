@@ -3,7 +3,7 @@ venv
 .idea
 .vscode
 mysite.iml
-__pycache__
+**/__pycache__
 dbarchive
 su.txt
 secrets.py
