@@ -23,7 +23,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv('SECRET_KEY', default='kdnKoh^@8&72KxiMK!&hn*#kLKHBWwbk')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# TODO: verify this works as expected
 
 # set env var DJANGO_DEV to enable debug mode
 DEBUG = bool(os.getenv('DJANGO_DEV', default=False))
@@ -75,7 +74,6 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-# TODO: switch to postgreSQL
 # TODO: set up env variables for postgres credentials for production
 # DATABASES = {
 #     'default': {
@@ -83,32 +81,39 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
-use_env_var = False
-if use_env_var:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.getenv('DB_NAME', default='mysite'),
-            'USER': os.getenv('DB_USER', default='blog'),
-            'PASSWORD': os.getenv('DB_PASSWORD', default='blog'),
-            'HOST': os.getenv('DB_HOST', default='localhost'),
-            'PORT': os.getenv('DB_PORT', default='5432'),
+
+if not DEBUG:
+    try:
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.postgresql',
+                'NAME': os.environ['DB_NAME'],
+                'USER': os.environ['DB_USER'],
+                'PASSWORD': os.environ['DB_PASSWORD'],
+                'HOST': os.environ['DB_HOST'],
+                'PORT': os.environ['DB_PORT'],
+            }
         }
-    }
+    except KeyError:
+        raise Exception('Missing environment variables for database connection')
+
 else:
-    import secrets
+    import json
 
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': secrets.db_name,
-            'USER': secrets.db_user,
-            'PASSWORD': secrets.db_password,
-            'HOST': secrets.db_host,
-            'PORT': secrets.db_port,
+    json_file = BASE_DIR / 'credentials.json'
+    with open(json_file) as credentials:
+        credentials = json.load(credentials)
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.postgresql',
+                'NAME': credentials['db_name'],
+                'USER': credentials['db_user'],
+                'PASSWORD': credentials['db_password'],
+                'HOST': credentials['db_host'],
+                'PORT': credentials['db_port'],
 
+            }
         }
-    }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators

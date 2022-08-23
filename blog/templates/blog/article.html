@@ -13,13 +13,24 @@
 {% endblock %}
 
 {% block body %}
-    <article class="blog_post">
-        <h1> {{ article.title }}</h1>
-        <h3 class="article_details">published: {{ article.pub_date }}</h3>
-        <h3 class="article_details">by: {{ article.author }}</h3>
 
+    <article class="blog_post">
+
+        <h1> {{ article.title }}</h1>
+
+        <div class="article_details">
+
+            <h3 class="article_details">published: {{ article.pub_date }} UTC</h3>
+            <h3 class="article_details">by: {{ article.author }}</h3>
+            {% for tag in article.tags.all %}
+                <h3 class="tags"><a href="{% url 'blog:tag' tag.tag_name %}">{{ tag.tag_name }}</a></h3>
+            {% endfor %}
+
+        </div>
         <p>
+
             {{ article.render_content_markdown|safe }}
         </p>
     </article>
+
 {% endblock %}
